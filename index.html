@@ -6,10 +6,7 @@
   <title>Geelong → Melbourne</title>
 
   <!-- Swiper CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
     html, body {
@@ -19,23 +16,30 @@
       background: #000;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
+      overscroll-behavior: none; /* prevent rubber-band / pull-to-refresh interference */
+    }
+
+    body {
+      position: fixed; /* stops page from moving under your finger */
+      width: 100%;
     }
 
     .swiper {
       width: 100vw;
-      height: 100vh;
-      overflow: hidden; /* IMPORTANT: prevents half-slide states */
+      height: 100svh;     /* mobile-safe viewport height */
+      overflow: hidden;   /* prevents half-slide states */
     }
 
     .swiper-wrapper {
-      height: 100%; /* IMPORTANT: stabilises layout */
+      height: 100%;
     }
 
     .swiper-slide {
-      height: 100%; /* IMPORTANT: full viewport slide */
+      height: 100%;
       position: relative;
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       align-items: flex-end;
       color: #fff;
@@ -114,11 +118,29 @@
     const swiper = new Swiper('.swiper', {
       direction: 'horizontal',
       loop: false,
-      speed: 400,
+      speed: 350,
       spaceBetween: 0,
       slidesPerView: 1,
-      freeMode: false,        // IMPORTANT: prevents stopping between slides
+
+      // Hard lock into slide snapping
+      freeMode: false,
+      cssMode: false,
+
+      // Gesture tuning: one swipe should land decisively on a slide
+      threshold: 10,
+      longSwipes: true,
+      longSwipesRatio: 0.15,
+      longSwipesMs: 200,
+      shortSwipes: true,
+      followFinger: true,
+
+      // Helps with weird edge-release / interrupted touches
+      touchReleaseOnEdges: true,
+
+      // Reduce rubbery feel / accidental multi-slide travel
+      resistance: true,
       resistanceRatio: 0,
+
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -127,4 +149,3 @@
   </script>
 </body>
 </html>
-
