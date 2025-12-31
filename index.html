@@ -1,160 +1,430 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>bustravelgame</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Region Explorer</title>
+    
+    <!-- Swiper.js CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Swiper CSS (required) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-  <style>
-    /* Hard reset */
-    html, body {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #000;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+        /* Container for both views */
+        .view-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
 
-    /* Prevent browser “rubber band” / sideways page interference */
-    body {
-      overscroll-behavior: none;
-    }
+        .view-container.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    /* Swiper fills the screen */
-    .swiper {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
+        /* Swiper instances fill viewport */
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
 
-      /* Let vertical scrolling gestures pass through, but keep horizontal for Swiper */
-      touch-action: pan-y;
-    }
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
 
-    /* Wrapper sizing */
-    .swiper-wrapper {
-      width: 100%;
-      height: 100%;
-    }
+        /* Dark overlay for readability */
+        .swiper-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
 
-    /* Slides: DO NOT force width, let Swiper compute it */
-    .swiper-slide {
-      height: 100%;
+        /* Content styling */
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
 
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 24px;
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
 
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #fff;
-    }
+        .slide-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
 
-    .swiper-slide::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0) 55%);
-      z-index:0;
-    }
+        /* Back button */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s ease;
+        }
 
-    .label {
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.5);
-    }
+        .back-button:active {
+            background: rgba(255, 255, 255, 1);
+        }
 
-    .label h1 {
-      margin: 0;
-      font-size: 44px;
-      line-height: 1.05;
-      font-weight: 700;
-    }
+        /* Pagination dots styling */
+        .swiper-pagination-bullet {
+            background: white;
+            opacity: 0.5;
+            width: 8px;
+            height: 8px;
+        }
 
-    .label p {
-      margin: 8px 0 0;
-      font-size: 18px;
-      opacity: 0.9;
-    }
-
-    /* Pagination visibility */
-    .swiper-pagination {
-      bottom: 14px !important;
-    }
-  </style>
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="swiper">
-    <div class="swiper-wrapper">
 
-      <div class="swiper-slide" style="background-image:url('https://images.unsplash.com/photo-1526481280695-3c687fd5432c?auto=format&fit=crop&w=1600&q=80');">
-        <div class="label"><h1>Geelong</h1><p>Start of the journey</p></div>
-      </div>
-
-      <div class="swiper-slide" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80');">
-        <div class="label"><h1>Avalon</h1><p>You Yangs &amp; plains</p></div>
-      </div>
-
-      <div class="swiper-slide" style="background-image:url('https://images.unsplash.com/photo-1547038577-da80f4dfd4c7?auto=format&fit=crop&w=1600&q=80');">
-        <div class="label"><h1>Werribee</h1><p>Western plains &amp; surrounds</p></div>
-      </div>
-
-      <div class="swiper-slide" style="background-image:url('https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=1600&q=80');">
-        <div class="label"><h1>Melbourne</h1><p>City approach</p></div>
-      </div>
-
-      <div class="swiper-slide" style="background-image:url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1600&q=80');">
-        <div class="label"><h1>Melbourne Airport</h1><p>End of the route</p></div>
-      </div>
-
+    <!-- REGIONS VIEW -->
+    <div id="regions-view" class="view-container active">
+        <div class="swiper" id="regions-swiper">
+            <div class="swiper-wrapper">
+                <!-- Regions will be injected here -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
 
-    <div class="swiper-pagination"></div>
-  </div>
+    <!-- LANDMARKS VIEW -->
+    <div id="landmarks-view" class="view-container">
+        <button class="back-button" id="back-button">← Back</button>
+        <div class="swiper" id="landmarks-swiper">
+            <div class="swiper-wrapper">
+                <!-- Landmarks will be injected here -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
 
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Swiper.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <script>
-    const swiper = new Swiper('.swiper', {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      loop: false,
+    <script>
+        // Hard-coded data
+        const REGIONS = [
+            {
+                name: 'Geelong',
+                image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80',
+                landmarks: [
+                    { 
+                        title: 'Geelong Waterfront', 
+                        image: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&q=80',
+                        description: 'Beautiful waterfront promenade with stunning bay views'
+                    },
+                    { 
+                        title: 'Eastern Beach', 
+                        image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+                        description: 'Historic bathing beach with art deco pool'
+                    },
+                    { 
+                        title: 'Botanic Gardens', 
+                        image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80',
+                        description: 'Peaceful gardens showcasing native and exotic plants'
+                    }
+                ]
+            },
+            {
+                name: 'Avalon',
+                image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80',
+                landmarks: [
+                    { 
+                        title: 'Avalon Airport', 
+                        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
+                        description: 'Major regional airport serving Victoria'
+                    },
+                    { 
+                        title: 'Point Wilson', 
+                        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+                        description: 'Scenic coastal point with maritime heritage'
+                    },
+                    { 
+                        title: 'Beach Reserve', 
+                        image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
+                        description: 'Protected coastal reserve with walking trails'
+                    }
+                ]
+            },
+            {
+                name: 'Werribee',
+                image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80',
+                landmarks: [
+                    { 
+                        title: 'Werribee Mansion', 
+                        image: 'https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&q=80',
+                        description: 'Grand Victorian mansion with formal gardens'
+                    },
+                    { 
+                        title: 'Open Range Zoo', 
+                        image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80',
+                        description: 'African wildlife experience in Victoria'
+                    },
+                    { 
+                        title: 'Werribee River', 
+                        image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80',
+                        description: 'Scenic river with parks and walking paths'
+                    }
+                ]
+            },
+            {
+                name: 'Melbourne',
+                image: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&q=80',
+                landmarks: [
+                    { 
+                        title: 'Federation Square', 
+                        image: 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=800&q=80',
+                        description: 'Cultural precinct and meeting place in the heart of the city'
+                    },
+                    { 
+                        title: 'Royal Botanic Gardens', 
+                        image: 'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?w=800&q=80',
+                        description: 'World-renowned gardens spanning 38 hectares'
+                    },
+                    { 
+                        title: 'Yarra River', 
+                        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+                        description: 'Iconic river flowing through the city center'
+                    }
+                ]
+            },
+            {
+                name: 'Melbourne Airport',
+                image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
+                landmarks: [
+                    { 
+                        title: 'Terminal Complex', 
+                        image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80',
+                        description: 'Modern international airport serving millions annually'
+                    },
+                    { 
+                        title: 'Aviation Museum', 
+                        image: 'https://images.unsplash.com/photo-1583792792159-c98e4a8d8e42?w=800&q=80',
+                        description: 'Showcasing Victoria\'s rich aviation history'
+                    },
+                    { 
+                        title: 'Observation Deck', 
+                        image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=800&q=80',
+                        description: 'Watch planes take off and land from this vantage point'
+                    }
+                ]
+            }
+        ];
 
-      // critical: force snapping to slides
-      freeMode: false,
-      cssMode: false,
-      centeredSlides: true,
-      centeredSlidesBounds: true,
-      snapOnRelease: true,
+        // State management
+        let regionsSwiper = null;
+        let landmarksSwiper = null;
+        let currentRegionIndex = 0;
 
-      // make it hard to stop “between slides”
-      threshold: 25,         // must move at least 25px before it counts as a swipe
-      shortSwipes: true,
-      longSwipes: true,
-      longSwipesRatio: 0.15, // lower = more likely to advance; still snaps cleanly
-      longSwipesMs: 200,
+        // Initialize app
+        function init() {
+            renderRegions();
+            initRegionsSwiper();
+            setupEventListeners();
+        }
 
-      // no elastic “halfway” feeling
-      resistance: true,
-      resistanceRatio: 0,
+        // Render region slides
+        function renderRegions() {
+            const wrapper = document.querySelector('#regions-swiper .swiper-wrapper');
+            wrapper.innerHTML = REGIONS.map((region, index) => `
+                <div class="swiper-slide" style="background-image: url('${region.image}');" data-region-index="${index}">
+                    <div class="slide-content">
+                        <h1 class="slide-title">${region.name}</h1>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-      // keep layout accurate on resize/orientation change
-      updateOnWindowResize: true,
+        // Render landmark slides for specific region
+        function renderLandmarks(regionIndex) {
+            const region = REGIONS[regionIndex];
+            const wrapper = document.querySelector('#landmarks-swiper .swiper-wrapper');
+            wrapper.innerHTML = region.landmarks.map(landmark => `
+                <div class="swiper-slide" style="background-image: url('${landmark.image}');">
+                    <div class="slide-content">
+                        <h1 class="slide-title">${landmark.title}</h1>
+                        <p class="slide-description">${landmark.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-      pagination: { el: '.swiper-pagination', clickable: true },
-    });
+        // Initialize Regions Swiper
+        // Configuration ensures ONE swipe = ONE slide with no partial positions
+        function initRegionsSwiper() {
+            regionsSwiper = new Swiper('#regions-swiper', {
+                // Effect and transition
+                effect: 'slide',
+                speed: 400,
+                
+                // Snap-to-slide stability: These settings prevent partial resting positions
+                // slidesPerView: 1 ensures only one full slide is visible
+                slidesPerView: 1,
+                spaceBetween: 0,
+                
+                // Touch controls: longSwipesRatio prevents accidental quick swipes from causing partial slides
+                // resistance and resistanceRatio ensure smooth boundary behavior
+                longSwipesRatio: 0.3,
+                threshold: 10,
+                resistance: true,
+                resistanceRatio: 0,
+                
+                // Prevent free-mode scrolling and momentum drift
+                freeMode: false,
+                
+                // Pagination
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                
+                // Touch event handling
+                touchStartPreventDefault: false,
+                
+                // Slide to clicked slide
+                slideToClickedSlide: false
+            });
+        }
 
-    // extra safety: if anything ever lands between, snap to nearest slide
-    swiper.on('touchEnd', () => swiper.slideTo(swiper.activeIndex));
-  </script>
+        // Initialize Landmarks Swiper
+        // Same snap-to-slide configuration as Regions for consistent behavior
+        function initLandmarksSwiper() {
+            // Destroy existing instance if any
+            if (landmarksSwiper) {
+                landmarksSwiper.destroy(true, true);
+            }
+
+            landmarksSwiper = new Swiper('#landmarks-swiper', {
+                effect: 'slide',
+                speed: 400,
+                
+                // Same snap-to-slide settings as regions
+                slidesPerView: 1,
+                spaceBetween: 0,
+                
+                longSwipesRatio: 0.3,
+                threshold: 10,
+                resistance: true,
+                resistanceRatio: 0,
+                
+                freeMode: false,
+                
+                pagination: {
+                    el: '#landmarks-view .swiper-pagination',
+                    clickable: true
+                },
+                
+                touchStartPreventDefault: false,
+                slideToClickedSlide: false
+            });
+
+            // Force Swiper to recalculate dimensions
+            setTimeout(() => {
+                if (landmarksSwiper) {
+                    landmarksSwiper.update();
+                }
+            }, 100);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Region card tap - switch to landmarks view
+            document.querySelector('#regions-swiper').addEventListener('click', (e) => {
+                const slide = e.target.closest('.swiper-slide');
+                if (slide) {
+                    const regionIndex = parseInt(slide.dataset.regionIndex);
+                    if (!isNaN(regionIndex)) {
+                        currentRegionIndex = regionsSwiper.activeIndex;
+                        showLandmarks(regionIndex);
+                    }
+                }
+            });
+
+            // Back button - return to regions view
+            document.getElementById('back-button').addEventListener('click', () => {
+                showRegions();
+            });
+        }
+
+        // Show landmarks view with fade transition
+        function showLandmarks(regionIndex) {
+            renderLandmarks(regionIndex);
+            
+            // Fade out regions
+            document.getElementById('regions-view').classList.remove('active');
+            
+            // Fade in landmarks
+            setTimeout(() => {
+                document.getElementById('landmarks-view').classList.add('active');
+                initLandmarksSwiper();
+            }, 50);
+        }
+
+        // Show regions view with fade transition
+        function showRegions() {
+            // Fade out landmarks
+            document.getElementById('landmarks-view').classList.remove('active');
+            
+            // Fade in regions at saved position
+            setTimeout(() => {
+                document.getElementById('regions-view').classList.add('active');
+                if (regionsSwiper) {
+                    regionsSwiper.slideTo(currentRegionIndex, 0);
+                    regionsSwiper.update();
+                }
+            }, 50);
+        }
+
+        // Start app
+        init();
+    </script>
+
 </body>
 </html>
