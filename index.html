@@ -145,6 +145,17 @@
         </div>
     </div>
 
+    <!-- DETAILS VIEW -->
+    <div id="details-view" class="view-container">
+        <button class="back-button" id="details-back-button">← Back</button>
+        <div class="swiper" id="details-swiper">
+            <div class="swiper-wrapper">
+                <!-- Details will be injected here -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
     <!-- Swiper.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -158,17 +169,32 @@
                     { 
                         title: 'Geelong Waterfront', 
                         image: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&q=80',
-                        description: 'Beautiful waterfront promenade with stunning bay views'
+                        description: 'Beautiful waterfront promenade with stunning bay views',
+                        pages: [
+                            { title: 'Overview', image: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&q=80', body: 'The Geelong Waterfront is a stunning promenade stretching along Corio Bay.' },
+                            { title: 'History', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', body: 'Originally an industrial port, the waterfront was transformed in the 1990s.' },
+                            { title: 'Activities', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'Enjoy walking, cycling, dining, and swimming along this vibrant precinct.' }
+                        ]
                     },
                     { 
                         title: 'Eastern Beach', 
                         image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
-                        description: 'Historic bathing beach with art deco pool'
+                        description: 'Historic bathing beach with art deco pool',
+                        pages: [
+                            { title: 'The Beach', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80', body: 'Eastern Beach features a protected swimming area and sandy shores.' },
+                            { title: 'Art Deco Pool', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'The historic swimming enclosure showcases beautiful Art Deco architecture.' },
+                            { title: 'Facilities', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', body: 'Change rooms, picnic areas, and playgrounds make this a family favorite.' }
+                        ]
                     },
                     { 
                         title: 'Botanic Gardens', 
                         image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80',
-                        description: 'Peaceful gardens showcasing native and exotic plants'
+                        description: 'Peaceful gardens showcasing native and exotic plants',
+                        pages: [
+                            { title: 'Gardens', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80', body: 'Established in 1851, these gardens feature diverse plant collections.' },
+                            { title: 'Wildlife', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80', body: 'Home to many bird species and native wildlife in a peaceful setting.' },
+                            { title: 'Events', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80', body: 'Regular events, concerts, and community programs throughout the year.' }
+                        ]
                     }
                 ]
             },
@@ -179,17 +205,32 @@
                     { 
                         title: 'Avalon Airport', 
                         image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80',
-                        description: 'Major regional airport serving Victoria'
+                        description: 'Major regional airport serving Victoria',
+                        pages: [
+                            { title: 'Airport', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80', body: 'Avalon Airport is the second busiest airport in Victoria.' },
+                            { title: 'Airlines', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80', body: 'Serving major domestic and international carriers.' },
+                            { title: 'Location', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80', body: 'Conveniently located between Geelong and Melbourne.' }
+                        ]
                     },
                     { 
                         title: 'Point Wilson', 
                         image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-                        description: 'Scenic coastal point with maritime heritage'
+                        description: 'Scenic coastal point with maritime heritage',
+                        pages: [
+                            { title: 'Coastline', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', body: 'Point Wilson offers spectacular views across Port Phillip Bay.' },
+                            { title: 'Maritime History', image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80', body: 'Historic lighthouse and maritime facilities dot the coastline.' },
+                            { title: 'Recreation', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'Popular spot for fishing, photography, and coastal walks.' }
+                        ]
                     },
                     { 
                         title: 'Beach Reserve', 
                         image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
-                        description: 'Protected coastal reserve with walking trails'
+                        description: 'Protected coastal reserve with walking trails',
+                        pages: [
+                            { title: 'Reserve', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'This protected reserve preserves natural coastal ecosystems.' },
+                            { title: 'Trails', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80', body: 'Well-maintained walking trails wind through the coastal landscape.' },
+                            { title: 'Wildlife', image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80', body: 'Home to diverse bird species and coastal vegetation.' }
+                        ]
                     }
                 ]
             },
@@ -200,17 +241,32 @@
                     { 
                         title: 'Werribee Mansion', 
                         image: 'https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&q=80',
-                        description: 'Grand Victorian mansion with formal gardens'
+                        description: 'Grand Victorian mansion with formal gardens',
+                        pages: [
+                            { title: 'The Mansion', image: 'https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=800&q=80', body: 'Built in 1877, this Italianate mansion is a stunning example of Victorian grandeur.' },
+                            { title: 'Gardens', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80', body: 'The formal gardens feature ornamental lakes and heritage roses.' },
+                            { title: 'Tours', image: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&q=80', body: 'Guided tours reveal the fascinating history of the Chirnside family.' }
+                        ]
                     },
                     { 
                         title: 'Open Range Zoo', 
                         image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80',
-                        description: 'African wildlife experience in Victoria'
+                        description: 'African wildlife experience in Victoria',
+                        pages: [
+                            { title: 'Safari', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80', body: 'Experience African wildlife up close on an open-air safari bus tour.' },
+                            { title: 'Animals', image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80', body: 'See giraffes, rhinos, zebras, and more in naturalistic habitats.' },
+                            { title: 'Conservation', image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80', body: 'The zoo plays a vital role in wildlife conservation programs.' }
+                        ]
                     },
                     { 
                         title: 'Werribee River', 
                         image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80',
-                        description: 'Scenic river with parks and walking paths'
+                        description: 'Scenic river with parks and walking paths',
+                        pages: [
+                            { title: 'The River', image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80', body: 'The Werribee River flows through the western suburbs to Port Phillip Bay.' },
+                            { title: 'Recreation', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', body: 'Popular for kayaking, cycling, and riverside picnics.' },
+                            { title: 'Parks', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'Multiple parks and reserves line the riverbanks.' }
+                        ]
                     }
                 ]
             },
@@ -221,17 +277,32 @@
                     { 
                         title: 'Federation Square', 
                         image: 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=800&q=80',
-                        description: 'Cultural precinct and meeting place in the heart of the city'
+                        description: 'Cultural precinct and meeting place in the heart of the city',
+                        pages: [
+                            { title: 'The Square', image: 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?w=800&q=80', body: 'Federation Square is Melbourne\'s premier cultural and civic space.' },
+                            { title: 'Architecture', image: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800&q=80', body: 'The bold design features angular geometry and innovative materials.' },
+                            { title: 'Events', image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&q=80', body: 'Year-round events, exhibitions, and public gatherings.' }
+                        ]
                     },
                     { 
                         title: 'Royal Botanic Gardens', 
                         image: 'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?w=800&q=80',
-                        description: 'World-renowned gardens spanning 38 hectares'
+                        description: 'World-renowned gardens spanning 38 hectares',
+                        pages: [
+                            { title: 'Gardens', image: 'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?w=800&q=80', body: 'Founded in 1846, these gardens are internationally recognized.' },
+                            { title: 'Collections', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80', body: 'Over 8,500 plant species from around the world.' },
+                            { title: 'Activities', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80', body: 'Enjoy walking trails, picnics, and guided tours.' }
+                        ]
                     },
                     { 
                         title: 'Yarra River', 
                         image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-                        description: 'Iconic river flowing through the city center'
+                        description: 'Iconic river flowing through the city center',
+                        pages: [
+                            { title: 'The River', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', body: 'The Yarra River is the lifeblood of Melbourne.' },
+                            { title: 'Riverwalk', image: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&q=80', body: 'Scenic paths line both banks, perfect for walking and cycling.' },
+                            { title: 'Water Activities', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', body: 'Kayaking, rowing, and river cruises are popular activities.' }
+                        ]
                     }
                 ]
             },
@@ -242,17 +313,32 @@
                     { 
                         title: 'Terminal Complex', 
                         image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80',
-                        description: 'Modern international airport serving millions annually'
+                        description: 'Modern international airport serving millions annually',
+                        pages: [
+                            { title: 'Terminals', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80', body: 'Melbourne Airport features four modern terminals.' },
+                            { title: 'Services', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80', body: 'World-class facilities, dining, and retail options.' },
+                            { title: 'Connectivity', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80', body: 'Connecting Melbourne to destinations worldwide.' }
+                        ]
                     },
                     { 
                         title: 'Aviation Museum', 
                         image: 'https://images.unsplash.com/photo-1583792792159-c98e4a8d8e42?w=800&q=80',
-                        description: 'Showcasing Victoria\'s rich aviation history'
+                        description: 'Showcasing Victoria\'s rich aviation history',
+                        pages: [
+                            { title: 'Museum', image: 'https://images.unsplash.com/photo-1583792792159-c98e4a8d8e42?w=800&q=80', body: 'The museum showcases historic aircraft and aviation artifacts.' },
+                            { title: 'Exhibits', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80', body: 'Interactive displays tell stories of Australian aviation pioneers.' },
+                            { title: 'Tours', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=800&q=80', body: 'Guided tours available for aviation enthusiasts.' }
+                        ]
                     },
                     { 
                         title: 'Observation Deck', 
                         image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=800&q=80',
-                        description: 'Watch planes take off and land from this vantage point'
+                        description: 'Watch planes take off and land from this vantage point',
+                        pages: [
+                            { title: 'Viewing', image: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=800&q=80', body: 'Perfect spot for plane spotting and photography.' },
+                            { title: 'Experience', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80', body: 'Feel the excitement as aircraft take off and land.' },
+                            { title: 'Access', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80', body: 'Open daily with facilities for visitors.' }
+                        ]
                     }
                 ]
             }
@@ -261,7 +347,9 @@
         // State management
         let regionsSwiper = null;
         let landmarksSwiper = null;
+        let detailsSwiper = null;
         let currentRegionIndex = 0;
+        let currentLandmarkIndex = 0;
 
         // Initialize app
         function init() {
@@ -286,11 +374,25 @@
         function renderLandmarks(regionIndex) {
             const region = REGIONS[regionIndex];
             const wrapper = document.querySelector('#landmarks-swiper .swiper-wrapper');
-            wrapper.innerHTML = region.landmarks.map(landmark => `
-                <div class="swiper-slide" style="background-image: url('${landmark.image}');">
+            wrapper.innerHTML = region.landmarks.map((landmark, index) => `
+                <div class="swiper-slide" style="background-image: url('${landmark.image}');" data-landmark-index="${index}">
                     <div class="slide-content">
                         <h1 class="slide-title">${landmark.title}</h1>
                         <p class="slide-description">${landmark.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render details slides for specific landmark
+        function renderDetails(regionIndex, landmarkIndex) {
+            const landmark = REGIONS[regionIndex].landmarks[landmarkIndex];
+            const wrapper = document.querySelector('#details-swiper .swiper-wrapper');
+            wrapper.innerHTML = landmark.pages.map(page => `
+                <div class="swiper-slide" style="background-image: url('${page.image}');">
+                    <div class="slide-content">
+                        <h1 class="slide-title">${page.title}</h1>
+                        <p class="slide-description">${page.body}</p>
                     </div>
                 </div>
             `).join('');
@@ -373,6 +475,46 @@
             }, 100);
         }
 
+        // Initialize Details Swiper
+        // Same snap-to-slide configuration as Regions and Landmarks for consistent behavior
+        function initDetailsSwiper() {
+            // Destroy existing instance if any
+            if (detailsSwiper) {
+                detailsSwiper.destroy(true, true);
+            }
+
+            detailsSwiper = new Swiper('#details-swiper', {
+                effect: 'slide',
+                speed: 400,
+                
+                // Same snap-to-slide settings as regions and landmarks
+                slidesPerView: 1,
+                spaceBetween: 0,
+                
+                longSwipesRatio: 0.3,
+                threshold: 10,
+                resistance: true,
+                resistanceRatio: 0,
+                
+                freeMode: false,
+                
+                pagination: {
+                    el: '#details-view .swiper-pagination',
+                    clickable: true
+                },
+                
+                touchStartPreventDefault: false,
+                slideToClickedSlide: false
+            });
+
+            // Force Swiper to recalculate dimensions
+            setTimeout(() => {
+                if (detailsSwiper) {
+                    detailsSwiper.update();
+                }
+            }, 100);
+        }
+
         // Setup event listeners
         function setupEventListeners() {
             // Region card tap - switch to landmarks view
@@ -387,9 +529,26 @@
                 }
             });
 
+            // Landmark card tap - switch to details view
+            document.querySelector('#landmarks-swiper').addEventListener('click', (e) => {
+                const slide = e.target.closest('.swiper-slide');
+                if (slide) {
+                    const landmarkIndex = parseInt(slide.dataset.landmarkIndex);
+                    if (!isNaN(landmarkIndex)) {
+                        currentLandmarkIndex = landmarksSwiper.activeIndex;
+                        showDetails(currentRegionIndex, landmarkIndex);
+                    }
+                }
+            });
+
             // Back button - return to regions view
             document.getElementById('back-button').addEventListener('click', () => {
                 showRegions();
+            });
+
+            // Details back button - return to landmarks view
+            document.getElementById('details-back-button').addEventListener('click', () => {
+                showLandmarksFromDetails();
             });
         }
 
@@ -418,6 +577,35 @@
                 if (regionsSwiper) {
                     regionsSwiper.slideTo(currentRegionIndex, 0);
                     regionsSwiper.update();
+                }
+            }, 50);
+        }
+
+        // Show details view with fade transition
+        function showDetails(regionIndex, landmarkIndex) {
+            renderDetails(regionIndex, landmarkIndex);
+            
+            // Fade out landmarks
+            document.getElementById('landmarks-view').classList.remove('active');
+            
+            // Fade in details
+            setTimeout(() => {
+                document.getElementById('details-view').classList.add('active');
+                initDetailsSwiper();
+            }, 50);
+        }
+
+        // Show landmarks view from details with fade transition
+        function showLandmarksFromDetails() {
+            // Fade out details
+            document.getElementById('details-view').classList.remove('active');
+            
+            // Fade in landmarks at saved position
+            setTimeout(() => {
+                document.getElementById('landmarks-view').classList.add('active');
+                if (landmarksSwiper) {
+                    landmarksSwiper.slideTo(currentLandmarkIndex, 0);
+                    landmarksSwiper.update();
                 }
             }, 50);
         }
