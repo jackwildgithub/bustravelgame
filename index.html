@@ -120,6 +120,23 @@
     opacity: 0.9;
 }
 
+    /* ============================= */
+/* PHOTO MODE (IMAGE-ONLY VIEW)  */
+/* ============================= */
+
+.swiper-slide.is-photo::before {
+  background: rgba(0,0,0,0);
+}
+
+.swiper-slide.is-photo .slide-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+  .swiper-slide::before,
+.slide-content {
+  transition: opacity 180ms ease, background 180ms ease;
+}
       
     
   </style>
@@ -269,8 +286,13 @@
       const slide = e.target.closest('.swiper-slide');
       if (!slide) return;
 
-      const type = slide.dataset.type;
-      if (type === "trivia") return;
+     const type = slide.dataset.type;
+
+// For trivia/title cards: toggle photo-only mode
+if (type === "trivia") {
+  slide.classList.toggle("is-photo");
+  return;
+}
 
       // Already revealed? Don’t spam
       if (slide.dataset.revealed === "1") return;
